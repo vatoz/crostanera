@@ -1,189 +1,187 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crosta Nera - Pizza od kamaráda na návštěvě</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .navbar { background-color: #f8f9fa; }
-        .navbar-brand, .nav-link { color: #333; }
-        .hero { background-color: #f4f4f4; padding: 60px 0; }
-        .card { margin-bottom: 20px; }
-        
-        
-        .logo {width:20em;}
-        
-        
-        
-    </style>
+  <!-- Přidá třídu "js" na <html> hned, jak se HTML parsuje. CSS pak ví, že
+       běží JavaScript, a smí prvky .reveal skrýt před animací. Bez JS zůstane
+       obsah viditelný. -->
+  <script>document.documentElement.className += ' js';</script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crosta Nera — pizzaiolo na návštěvě</title>
+
+  <!-- Google Fonts: Caveat (rukopis), Lora (text), Oswald (display) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Externí styly -->
+  <link rel="stylesheet" href="styles.css">
+
+  
 </head>
+
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">Crosta Nera</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#home">Domů</a></li>
-                    <li class="nav-item" style="display:none"><a class="nav-link" href="#today" >Dnešní menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#menu-page">Menu</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#ovens-page">Pece</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact-page">Kontakt</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-
-    <!-- Content for index.html -->
-    <section class="hero text-center" id="home">
-        <div class="container">
-            <img class=logo src="crosta.svg" alt="Logo" class="img-fluid mt-3">
-            <h1 style="display:none">Crosta Nera</h1>
-            <p class="lead">Pizzaiolo na návštěvě</p>            
-        </div>
-    </section>
-
-    <div class="container my-5">
-        <section id="about">
-            <h2>O mě</h2>
-            <p>Crosta Nera přináší autentickou pizzu přímo k tobě. Ať už jsi doma nebo pořádáš párty, festival či svatbu, náš pizzaiolo Vašek přijede a připraví pro tebe a tvé přátele čerstvou, chutnou pizzu neapolského stylu.</p>
-            <p>Vašek vždy rád pracoval s kynutým těstem. Pak se jednou vydal na kurz pizzy k Frankiemu, naučil se řadu triků a postupů. Od té doby je do pizzy trošičku blázen.</p>
-
-        </section>
+  <!-- ============ NAV — horní lepkavá navigace ============ -->
+  <nav class="nav">
+    <div class="wrap inner">
+      <a href="#top"><img class="logo" src="assets/crosta.svg" alt="Crosta Nera"></a>
+      <div class="spacer"></div>
+      <div class="links">
+        <a href="#o-mne">O mně</a>
+        <a href="#pece">Pece</a>
+        <a href="#menu">Menu</a>
+        <a href="#kontakt">Kontakt</a>
+      </div>
     </div>
-    
-    <!-- 
-    <div class="container my-5" id="menu-page"  style="display:none">
-        <a name="daily" />
-        <h2>Dnešní  Menu</h2>
-        <p>Dnes pravděpodobně budeme péci pizzy jako: </p>
+  </nav>
 
-        <div class="row">
-            <div class="col-md-6">
-                <h3>Upečeno</h3>
-                <ul>
-                    <li>Margherita</li>
-                    <li>Quattro Formaggi</li>
-                    <li>Napoli</li>
-                    <li>Prosciutto e Funghi</li>
-                </ul>
-            </div>
-            <div class="col-md-6">
-                <h3>Aktuálně ve frontě</h3>
-                <ul>
-                    <li>Smažák Pizza</li>
-                    <li>Pizza s Křenem</li>
-                    <li>Sezónní Speciál</li>
-                </ul>
-               
-            </div>
-        </div>
-
-    </div>
--->
-
-
-
-    <div class="container my-5" id="menu-page" >        
-        <h2>Moje menu</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <h3>Klasické pizzy</h3>
-                <ul>
-                    <li>Margherita</li>
-                    <li>Quattro Formaggi</li>
-                    <li>Napoli</li>
-                    <li>Prosciutto e Funghi</li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h3>Speciální pizzy</h3>
-                <ul>
-
-                    <li>Pizza s Křenem</li>
-                    <li>Slanina, švestky</li>
-                    <li>Hruška, kozí sýr, brusinky/ořechy</li>
-                    
-                </ul>
-                
-
-
-</div>
-
-<div class="col-md-4">
-    <h3>A další </h3>
-    <p> Řekni si na co máš chuť. Někdo miluje dýňový základ, jiného potěší horká čokoláda nebo třeba Hawai.  Na každé pečení nakupujeme zvlášť a rádi si vyhrajeme s tvým požadavkem, pokud to bude jen trochu možné.</p>
-    
-</div>
-
-           
-        </div>
+  <!-- ============ HERO — úvod: logo, podtitul, pitch, CTA ============ -->
+  <header class="hero" id="top">
+    <div class="wrap inner">
+      <img class="brushlogo" src="assets/crosta.svg" alt="Crosta Nera">
+      <p class="subtitle">pizzaiolo na návštěvě</p>
+      <p class="pitch">Přijedu a upeču čerstvou neapolskou pizzu přímo u tebe — doma, na párty, festivalu i svatbě.</p>
+      <div class="cta-row">
+        <a class="btn ghost" href="#o-mne">Číst dál ↓</a>
+        <a class="btn cta-daily" href="#dnes" hidden>Co dnes pečeme →</a>
+      </div>
     </div>
 
-    <!-- Content for ovens.html -->
-    <div class="container my-5" id="ovens-page">
-        <h2>Použité  pece</h2>
-        
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <!--<img src="/api/placeholder/300/200" class="card-img-top" alt="Elektrická pec">-->
-                    <div class="card-body">
-                        <h5 class="card-title">Obyčejná elektrická trouba</h5>
-                        Zatím na počet realizovaných pizz s přehledem vede. Výsledek tě opravdu příjemně překvapí.
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="img/wood.jpg" class="card-img-top" alt="Velká dřevěná pec">
-                    <div class="card-body">
-                        <h5 class="card-title">Velká pec na dřevo</h5>
-                        V peci na dřevo je radost péct, a pořád je to pro mne svátek.
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <!--<img src="/api/placeholder/300/200" class="card-img-top" alt="Specializovaná elektrická pec">-->
-                    <div class="card-body">
-                        <h5 class="card-title">Specializovaná elektrická pícka</h5>
-                        Zatím se s ní učím, ale časem to bude funkční varianta. 
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <img src="img/your.png" class="card-img-top" alt="Vaše pec">
-                    <div class="card-body">
-                        <h5 class="card-title">Tvoje pec</h5>
-                        <p>Tohle je trouba, kterou máš doma, nebo pec co máš na zahradě. To je to místo kde se bude péct.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- "Dnešní menu" — žlutá lepicí poznámka. Zobrazí se jen když events.json
+         obsahuje záznam pro dnešní datum (skript v script.js sundá hidden). -->
+    <div class="daily-anchor" id="dnes" hidden>
+      <div class="daily">
+        <div class="h"><span class="dot"></span> Dnes pečeme</div>
+        <ul>
+          <li>Margherita</li>
+          <li>Quattro Formaggi</li>
+          <li>Slanina &amp; švestky</li>
+          <li>…a něco navíc</li>
+        </ul>
+        <div class="when">SO 7. 6. · od 17:00</div>
+      </div>
     </div>
+  </header>
 
-    <!-- Content for contact.html -->
-    <div class="container my-5" id="contact-page">
-    
-        <h2>Kontaktuj mě</h2>
-        <p>Chceš pizzu na svou akci? Kontaktuj mě. Zatím vysloveně komerčně pizzu nedělám, jen pro kamarády (či kamarády kamarádů). Ale třeba se domluvíme, zvlášť pokud za tím bude dobrý příběh. </p>
-        <p>Vašek Černý</p>
-        
-    </div>
-
-    <footer class="bg-light text-center py-3 mt-5">
-        <div class="container">
-            <p>&copy; 2024 VašekČerný.cz  Všechna práva vyhrazena.</p>
+  <!-- ============ O MNĚ ============ -->
+  <section class="band" id="o-mne">
+    <div class="wrap about-grid">
+      <div class="about-copy reveal">
+        <p class="kicker">O mně</p>
+        <h2 class="title">Ahoj, já jsem Vašek</h2>
+        <p>Vždycky jsem rád pracoval s kynutým těstem. Pak jsem se jednou vydal na kurz pizzy k Frankiemu, naučil se spoustu triků a postupů.</p>
+        <p class="pull">A od té doby jsem do pizzy trošičku blázen.</p>
+        <p>Peču pizzy na návštěvě u kamarádů, pravidelně na zpívání u osvětlovačů, na narozeninách — pro radost sobě i ostatním. Baví mě zkoušet nové kombinace.</p>
+      </div>
+      <div class="about-photos reveal">
+        <div class="polaroid p1">
+          <span class="tape"></span>
+          <img id="cn-vasek" style="height:200px" shape="rect" placeholder="Foto — Vašek u pece"/>
+          <div class="cap">u pece</div>
         </div>
-    </footer>
+        <div class="polaroid p2">
+          <span class="tape"></span>
+          <img id="cn-testo" style="height:200px" shape="rect" placeholder="Foto — kynuté těsto"/>
+          <div class="cap">kynuté těsto = láska</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- ============ PECE — mřížka polaroidů ============ -->
+  <section class="band" id="pece">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <p class="kicker">Kde se peče</p>
+        <h2 class="title">Moje (i tvoje) pece</h2>
+        <p class="lead" style="color:var(--ink-soft); max-width:560px; margin:0 auto;">Jak to těsto upéct? Můžu si přivézt malou elektrickou pícku, ale úplně bude stačit trouba.</p>
+      </div>
+      <div class="ovens reveal">
+        <div class="polaroid">
+          <span class="tape"></span>
+          <image-slot id="cn-trouba" style="height:172px" shape="rect" placeholder="Foto — el. trouba"></image-slot>
+          <div class="cap">Obyčejná trouba</div>
+          <div class="desc">Zatím v počtu upečených pizz s přehledem vede. Výsledek tě fakt mile překvapí.</div>
+        </div>
+        <div class="polaroid">
+          <span class="tape"></span>
+          <img id="cn-drevo" style="height:172px" shape="rect" src="assets/wood.jpg" placeholder="Foto — pec na dřevo"/>
+          <div class="cap">Pec na dřevo</div>
+          <div class="desc">V peci na dřevo je radost péct — a pořád je to pro mě svátek.</div>
+        </div>
+        <div class="polaroid">
+          <span class="tape"></span>
+          <img id="cn-picka" style="height:172px" shape="rect" placeholder="Foto — el. pícka"  src="assets/electric.jpg"/>
+          <div class="cap">Spec. pícka</div>
+          <div class="desc">Má výhodu, že se dá přenést na zahradu nebo tak.</div>
+        </div>
+        <div class="polaroid">
+          <span class="tape" style="background:color-mix(in srgb, var(--accent) 35%, transparent);"></span>
+          <image-slot id="cn-tvoje" style="height:172px" shape="rect" placeholder="Foto — tvoje pec"></image-slot>
+          <div class="cap">Tvoje pec!</div>
+          <div class="desc">Trouba, co máš doma, nebo pec na zahradě. Přesně tam se bude péct.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MENU — papírová karta ============ -->
+  <section class="band" id="menu">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <p class="kicker">Co peču</p>
+        <h2 class="title">Menu</h2>
+      </div>
+      <div class="menu-card reveal">
+        <div class="menu-cols">
+          <div class="menu-grp">
+            <h3>Klasické</h3>
+            <ul>
+              <li>Margherita</li>
+              <li>Quattro Formaggi</li>
+              <li>Napoli</li>
+              <li>Prosciutto e Funghi</li>
+            </ul>
+          </div>
+          <div class="menu-grp">
+            <h3>Speciální</h3>
+            <ul>
+              <li>Slanina &amp; švestky</li>
+              <li>Hruška, kozí sýr, brusinky / ořechy</li>
+              <li>Lilková pizza</li>
+              <li>Bezlaktózové kuře na kari</li>
+            </ul>
+          </div>
+          <div class="menu-grp wish">
+            <h3>Na přání</h3>
+            <p>Řekni si, na co máš chuť. Někdo miluje dýňový základ, jiného potěší horká čokoláda nebo třeba Hawai. Na každé pečení nakupuju zvlášť a rád si vyhraju s tvým požadavkem, pokud to jen trochu půjde. A třeba společně zjistíme, že tudy opravdu cesta nevede. Většinou pizzy nakrájím na dílky, a kdo má chuť, ten si jeden vezme.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KONTAKT — pohlednice ============ -->
+  <section class="band" id="kontakt">
+    <div class="wrap">
+      <div class="sec-head center reveal">
+        <p class="kicker">Ozvi se</p>
+        <h2 class="title">Chceš pizzu na akci?</h2>
+      </div>
+      <div class="postcard reveal">
+        <div class="stamp"><span>CN</span></div>
+        <p>Zatím to neženu komerčně — peču jen pro kamarády (a kamarády kamarádů). Ale třeba se domluvíme, zvlášť když je za tím dobrý příběh.</p>
+        <div class="mail"><a class="btn" href="mailto:vasek@vasekcerny.cz?subject=Pizza%20na%20akci">✉ vasek@vasekcerny.cz</a></div>
+        <p class="sign">— Vašek Černý</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>© 2024 crostanera.cz</footer>
+
+  <!-- Externí skript (reveal + denní menu). Na konci <body>, aby byl DOM hotový. -->
+  <script src="script.js"></script>
 </body>
 </html>

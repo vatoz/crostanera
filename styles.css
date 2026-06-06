@@ -1,0 +1,231 @@
+/* =============================================================================
+   Crosta Nera — pizzaiolo na návštěvě
+   styles.css — kompletní vzhled stránky
+   -----------------------------------------------------------------------------
+   Struktura souboru (skoč na sekci přes hledání "----------"):
+     1) :root           — barvy, fonty a další proměnné (mění se centrálně)
+     2) reset/základ    — výchozí styl <body>, obrázků, odkazů
+     3) helpers         — opakované utility (.wrap, .kicker, .title, .tape…)
+     4) polaroid        — fotky ve stylu polaroidu
+     5) buttons         — tlačítka (.btn)
+     6) nav             — horní lepkavá navigace
+     7) hero            — úvodní blok s logem a "dnešním menu"
+     8) sekce / pásy    — společný rámec sekcí (.band)
+     9) o mně           — dvousloupcový blok s fotkami
+    10) pece            — mřížka polaroidů
+    11) menu            — "papírová" karta s nabídkou
+    12) kontakt         — pohlednice s e-mailem
+    13) footer
+    14) reveal          — animace nabíhání při scrollu
+   ========================================================================== */
+
+
+/* ----------------------------------------------------------------------------
+   1) PROMĚNNÉ — barvy, fonty.
+   Všechno laděné do "papírové" palety (teplé béžové).
+   Změnou tady přebarvíš celou stránku.
+---------------------------------------------------------------------------- */
+:root{
+  --paper:#ece3d2;          /* hlavní podklad stránky */
+  --paper-2:#e4d9c3;        /* tmavší odstín papíru */
+  --card:#f6f1e6;           /* světlejší podklad karet */
+  --ink:#262220;            /* hlavní tmavá barva textu */
+  --ink-soft:#5f574d;       /* tlumený text (popisky) */
+  --ink-faint:#9a8f7e;      /* nejslabší text (kickery, footer) */
+  --line:#cdc1aa;           /* barva linek a oddělovačů */
+  --sticky:#f0e29a;         /* žlutá lepicí poznámka */
+  --sticky-edge:#d9c873;    /* její okraj */
+  --tape:rgba(206,191,150,.6); /* průhledná "lepicí páska" */
+
+  --hand:'Caveat',cursive;        /* rukopisné písmo (nadpisy, popisky) */
+  --disp:'Oswald',sans-serif;     /* "display" — kickery, tlačítka, nav */
+  --body:'Lora',Georgia,serif;    /* čtený text */
+
+  --accent:var(--ink);
+}
+
+
+/* ----------------------------------------------------------------------------
+   2) RESET / ZÁKLAD
+---------------------------------------------------------------------------- */
+*{box-sizing:border-box;}                 /* rozumný box-model pro všechno */
+html{scroll-behavior:smooth;}             /* plynulé skákání po kotvách #id */
+body{
+  margin:0; color:var(--ink); font-family:var(--body); font-size:18px; line-height:1.72;
+  background:var(--paper);
+  /* Podklad = dva jemné světelné přechody + papírový šum (SVG noise inline). */
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(255,255,255,.45) 0, transparent 38%),
+    radial-gradient(circle at 88% 92%, rgba(0,0,0,.05) 0, transparent 42%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+img{display:block; max-width:100%;}       /* obrázky jako bloky, nikdy nepřetečou */
+a{color:inherit;}                         /* odkazy dědí barvu textu */
+
+
+/* ----------------------------------------------------------------------------
+   3) HELPERS — opakované utility používané napříč stránkou
+---------------------------------------------------------------------------- */
+/* .wrap — centrovaný obsahový kontejner s bočním odsazením */
+.wrap{max-width:1140px; margin:0 auto; padding:0 28px;}
+
+/* .kicker — malý nadnadpis nad titulkem (verzálky, prostrkané) */
+.kicker{font-family:var(--disp); font-weight:600; text-transform:uppercase; letter-spacing:.28em; font-size:13px; color:var(--ink-faint);}
+
+/* .title — velký rukopisný nadpis, plynule škálovaný podle šířky okna */
+.title{font-family:var(--hand); font-weight:700; line-height:.95; font-size:clamp(46px,7vw,86px); margin:.08em 0 .35em;}
+
+.lead{font-size:20px;}                     /* zvětšený úvodní odstavec */
+.center{text-align:center;}
+
+/* .tape — dekorativní "lepicí páska" (např. nad polaroidem).
+   Maskou se okraje rozplynou, ::after přidá jemné pruhy. */
+.tape{position:absolute; width:118px; height:30px; background:var(--tape); box-shadow:0 1px 2px rgba(0,0,0,.08);
+  left:50%; top:-14px; transform:translateX(-50%) rotate(-3deg); z-index:3;
+  -webkit-mask-image:linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 6px), transparent 100%);
+          mask-image:linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 6px), transparent 100%);}
+.tape::after{content:""; position:absolute; inset:0; background:repeating-linear-gradient(90deg, rgba(255,255,255,.18) 0 8px, transparent 8px 16px);}
+
+
+/* ----------------------------------------------------------------------------
+   4) POLAROID — rámeček fotky se spodním popiskem
+---------------------------------------------------------------------------- */
+.polaroid{position:relative; background:#fbf8f1; padding:12px 12px 0; border:1px solid #e6ddc9;
+  box-shadow:0 14px 26px -14px rgba(38,34,32,.55); }
+/* Vlastní obrázek (image-slot komponenta) nebo placeholder vyplní celou šířku. */
+.polaroid image-slot, .polaroid .ph-img{display:block; width:100%; background:#ded3bd;}
+.polaroid .cap{font-family:var(--hand); font-weight:600; font-size:26px; line-height:1.04; text-align:center; padding:12px 6px 16px; color:var(--ink);}
+.polaroid .cap small{display:block; font-family:var(--body); font-size:14px; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
+
+
+/* ----------------------------------------------------------------------------
+   5) BUTTONS — tlačítka, plná i obrysová (.ghost)
+---------------------------------------------------------------------------- */
+.btn{display:inline-flex; align-items:center; gap:10px; font-family:var(--disp); font-weight:600; text-transform:uppercase;
+  letter-spacing:.08em; font-size:15px; padding:13px 26px; border-radius:2px; cursor:pointer; text-decoration:none;
+  background:var(--accent); color:var(--paper); border:2px solid var(--accent); transition:.16s;}
+.btn:hover{transform:translateY(-2px); box-shadow:0 8px 18px -8px rgba(38,34,32,.7);} /* lehké nadzvednutí */
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--ink);}
+.btn.ghost:hover{background:var(--ink); color:var(--paper);}
+
+
+/* ----------------------------------------------------------------------------
+   6) NAV — horní lišta. position:sticky => drží se u horního okraje při scrollu.
+---------------------------------------------------------------------------- */
+.nav{position:sticky; top:0; z-index:40; background:rgba(236,227,210,.86); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);}
+.nav .inner{display:flex; align-items:center; gap:22px; height:66px;}
+.nav .logo{height:34px; width:auto;}
+.nav .spacer{flex:1;}                       /* odtlačí odkazy doprava */
+.nav .links{display:flex; gap:26px;}
+.nav .links a{font-family:var(--disp); font-weight:500; text-transform:uppercase; letter-spacing:.14em; font-size:13px; color:var(--ink-soft); text-decoration:none; padding:4px 0; border-bottom:2px solid transparent; white-space:nowrap;}
+.nav .links a:hover{color:var(--ink); border-color:var(--accent);}
+.nav .navcta{font-family:var(--disp); font-weight:600; text-transform:uppercase; letter-spacing:.08em; font-size:13px; padding:9px 16px; background:var(--accent); color:var(--paper); text-decoration:none; border-radius:2px; white-space:nowrap;}
+@media(max-width:720px){ .nav .links{display:none;} } /* na mobilu odkazy skryjeme */
+
+
+/* ----------------------------------------------------------------------------
+   7) HERO — úvodní obrazovka: logo, podtitul, pitch, CTA + "dnešní menu"
+---------------------------------------------------------------------------- */
+.hero{position:relative; padding:56px 0 60px; overflow:hidden;}
+.hero .inner{position:relative; z-index:2; text-align:center;}
+.hero .brushlogo{width:min(420px,76vw); margin:0 auto; filter:drop-shadow(0 8px 18px rgba(38,34,32,.18));}
+.hero .subtitle{font-family:var(--hand); font-weight:600; font-size:clamp(30px,4.6vw,46px); color:var(--accent); margin:14px 0 0; transform:rotate(-1.2deg);}
+.hero .pitch{max-width:560px; margin:14px auto 0; font-size:20px; color:var(--ink-soft);}
+.hero .cta-row{margin-top:28px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+
+/* Žlutá lepicí poznámka "Dnes pečeme" — natočená, s páskou nahoře. */
+.daily{position:relative; background:var(--sticky); color:#3a3008; width:228px; padding:16px 18px 18px;
+  box-shadow:0 16px 30px -16px rgba(38,34,32,.65); transform:rotate(2.4deg);
+  font-family:var(--body);}
+.daily::before{content:""; position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-4deg); width:96px; height:26px; background:rgba(255,255,255,.5); box-shadow:0 1px 2px rgba(0,0,0,.12);}
+.daily .h{font-family:var(--disp); font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:13px; display:flex; align-items:center; gap:7px;}
+/* Pulzující červená tečka = "živý" indikátor akce. */
+.daily .dot{width:9px; height:9px; border-radius:50%; background:#c0392b; box-shadow:0 0 0 3px rgba(192,57,43,.18); animation:pulse 2.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.45;}}
+.daily ul{list-style:none; margin:10px 0 0; padding:0; font-family:var(--hand); font-size:20px; line-height:1.42;}
+.daily ul li{border-bottom:1px dashed rgba(58,48,8,.3); padding:3px 0;}
+.daily .when{font-family:var(--disp); font-size:11px; letter-spacing:.1em; margin-top:9px; color:#6b5a14;}
+/* Umístění poznámky — absolutně vpravo nahoře v heru. */
+.hero .daily-anchor{position:absolute; right:max(28px,6vw); top:40px; z-index:5;}
+@media(max-width:900px){ .hero .daily-anchor{position:static; margin:30px auto 0; display:flex; justify-content:center;} }
+
+#dnes{scroll-margin-top:84px;}             /* odsazení pod sticky nav při skoku */
+
+
+/* ----------------------------------------------------------------------------
+   8) SEKCE / PÁSY — společný rámec všech sekcí
+---------------------------------------------------------------------------- */
+section.band{padding:74px 0;}
+.band + .band{border-top:1px solid var(--line);} /* linka mezi sousedními pásy */
+.sec-head{max-width:680px;}
+.sec-head.center{margin:0 auto; text-align:center;}
+
+
+/* ----------------------------------------------------------------------------
+   9) O MNĚ — text vlevo, fotky vpravo (na mobilu pod sebou)
+---------------------------------------------------------------------------- */
+.about-grid{display:grid; grid-template-columns:1.1fr .9fr; gap:48px; align-items:center;}
+.about-copy p{margin:0 0 18px;}
+.about-copy .pull{font-family:var(--hand); font-size:30px; line-height:1.15; color:var(--accent); transform:rotate(-1deg); margin:8px 0 0;}
+/* Fotky jsou absolutně umístěné a překrývají se — koláž. */
+.about-photos{position:relative; min-height:380px;}
+.about-photos .polaroid{position:absolute; width:240px;}
+.about-photos .p1{top:0; left:18%; transform:rotate(-4deg);}
+.about-photos .p2{top:120px; left:46%; transform:rotate(3.5deg);}
+@media(max-width:860px){ .about-grid{grid-template-columns:1fr; gap:36px;} .about-photos{min-height:0; display:flex; gap:20px; justify-content:center; flex-wrap:wrap;} .about-photos .polaroid{position:static; transform:rotate(-2deg);} .about-photos .p2{transform:rotate(2deg);} }
+
+
+/* ----------------------------------------------------------------------------
+   10) PECE — mřížka 4 polaroidů (na mobilu 2, pak 1 sloupec)
+---------------------------------------------------------------------------- */
+.ovens{display:grid; grid-template-columns:repeat(4,1fr); gap:26px; margin-top:42px;}
+.ovens .polaroid{transform:rotate(var(--r,-2deg));}      /* každý lehce natočený */
+.ovens .polaroid:nth-child(2n){--r:2deg;}                /* sudé na druhou stranu */
+.ovens .polaroid .desc{font-family:var(--body); font-size:14.5px; line-height:1.5; color:var(--ink-soft); text-align:center; padding:0 8px 14px;}
+@media(max-width:880px){ .ovens{grid-template-columns:1fr 1fr; gap:30px 22px;} }
+@media(max-width:520px){ .ovens{grid-template-columns:1fr; max-width:300px; margin-inline:auto;} }
+
+
+/* ----------------------------------------------------------------------------
+   11) MENU — "papírová" karta s dvousloupcovou nabídkou
+---------------------------------------------------------------------------- */
+.menu-card{position:relative; background:var(--card); border:1px solid #e0d6c0; max-width:920px; margin:44px auto 0;
+  padding:46px 44px 40px; box-shadow:0 24px 50px -28px rgba(38,34,32,.6); transform:rotate(-.5deg);}
+.menu-card::after{content:""; position:absolute; inset:7px; border:1px dashed var(--line); pointer-events:none;} /* vnitřní rámeček */
+.menu-cols{display:grid; grid-template-columns:1fr 1fr; gap:34px 50px; position:relative; z-index:1;}
+.menu-grp h3{font-family:var(--disp); font-weight:600; text-transform:uppercase; letter-spacing:.16em; font-size:15px; color:var(--accent); margin:0 0 12px; padding-bottom:8px; border-bottom:2px solid var(--ink);}
+.menu-grp ul{list-style:none; margin:0; padding:0;}
+.menu-grp li{font-family:var(--hand); font-size:27px; line-height:1.42; border-bottom:1px dotted var(--line); padding:2px 0;}
+.menu-grp.wish{grid-column:1 / -1;}        /* "Na přání" přes celou šířku */
+.menu-grp.wish p{margin:0; font-size:18px; color:var(--ink-soft);}
+@media(max-width:680px){ .menu-cols{grid-template-columns:1fr;} .menu-card{padding:34px 26px;} }
+
+
+/* ----------------------------------------------------------------------------
+   12) KONTAKT — pohlednice s "razítkem", textem a podpisem
+---------------------------------------------------------------------------- */
+.postcard{position:relative; max-width:760px; margin:44px auto 0; background:var(--card); border:2px solid var(--ink);
+  padding:46px 44px; box-shadow:14px 16px 0 rgba(38,34,32,.12); text-align:center;}
+.postcard .stamp{position:absolute; top:18px; right:18px; width:84px; height:96px; border:2px dashed var(--ink-faint); display:flex; align-items:center; justify-content:center; transform:rotate(4deg);}
+.postcard .stamp span{font-family:var(--hand); font-size:34px; line-height:.85; text-align:center; color:var(--ink-soft);}
+.postcard p{max-width:520px; margin:0 auto;}
+.postcard .sign{font-family:var(--hand); font-size:34px; margin-top:22px; color:var(--accent);}
+.postcard .mail{margin-top:22px;}
+@media(max-width:560px){ .postcard .stamp{display:none;} }
+
+
+/* ----------------------------------------------------------------------------
+   13) FOOTER
+---------------------------------------------------------------------------- */
+footer{padding:30px 0 40px; text-align:center; color:var(--ink-faint); font-family:var(--disp); font-size:12px; letter-spacing:.14em; text-transform:uppercase;}
+
+
+/* ----------------------------------------------------------------------------
+   14) REVEAL — nabíhání prvků při scrollu.
+   Důležité: opacity:0 platí JEN když běží JS (třída .js na <html>).
+   Bez JS (nebo když selže IntersectionObserver) je obsah normálně vidět.
+---------------------------------------------------------------------------- */
+.js .reveal{opacity:0; transform:translateY(22px);}
+.reveal.in{opacity:1; transform:none; transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);}
+@media(prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none;} } /* respekt k nastavení uživatele */
